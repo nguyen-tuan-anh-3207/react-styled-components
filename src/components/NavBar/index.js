@@ -1,12 +1,25 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { NavBarContainer, NavBarLogo, Nav, MobileIcon, NavLinks,NavMenu, NavItem, NavBtn, NavBtnLink } from "./NavBarElements";
 import {FaBars} from 'react-icons/fa'; 
+import {IconContext} from 'react-icons/lib';
 
 const NavBar = ({toggle}) => {
+    const [scrollNav, setScrollNav] = useState(false);
 
+    const changeNav = () =>{
+        if(window.scrollY >= 80) {
+            setScrollNav(true);
+        }else {
+            setScrollNav(false);
+        }
+    }
+
+    useEffect(() =>{
+        window.addEventListener('scroll', changeNav)
+    },[]);
   return (
-    
-      <Nav>
+        <IconContext.Provider value = {{color: '#fff'}}>
+      <Nav scrollNav = {scrollNav}>
         <NavBarContainer>
           <NavBarLogo to= '/'>Dolla</NavBarLogo>
           <MobileIcon onClick = {toggle}>
@@ -31,7 +44,7 @@ const NavBar = ({toggle}) => {
           </NavBtn>
         </NavBarContainer>
       </Nav>
-    
+      </IconContext.Provider>
   );
 };
 
